@@ -5,9 +5,7 @@ export const Footer: React.FC = () => {
   const scrollToContact = () => {
     const el = document.getElementById('contact');
     if (el) {
-      const offset = 80;
-      const pos = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top: pos, behavior: 'smooth' });
+      el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 

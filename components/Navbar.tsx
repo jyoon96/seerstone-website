@@ -33,9 +33,7 @@ export const Navbar: React.FC = () => {
     e.preventDefault();
     const el = document.getElementById(id);
     if (el) {
-      const offset = 80;
-      const pos = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top: pos, behavior: 'smooth' });
+      el.scrollIntoView({ behavior: 'smooth' });
     }
     setIsMenuOpen(false);
   };

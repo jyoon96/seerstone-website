@@ -20,6 +20,7 @@ const METRICS: Metric[] = [
 const AnimatedCounter: React.FC<{ metric: Metric; delay: number }> = ({ metric, delay }) => {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   useEffect(() => {
@@ -32,20 +33,27 @@ const AnimatedCounter: React.FC<{ metric: Metric; delay: number }> = ({ metric, 
       let current = 0;
       const increment = metric.value / steps;
 
-      const interval = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         current += increment;
         if (current >= metric.value) {
           setCount(metric.value);
-          clearInterval(interval);
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
         } else {
           setCount(Math.floor(current));
         }
       }, stepTime);
-
-      return () => clearInterval(interval);
     }, delay);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
   }, [isInView, metric.value, delay]);
 
   return (

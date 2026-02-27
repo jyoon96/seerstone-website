@@ -12,7 +12,6 @@ export const CustomCursor: React.FC = () => {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
 
-  const springConfig = { damping: 25, stiffness: 300, mass: 0.5 };
   const ringSpringConfig = { damping: 30, stiffness: 200, mass: 0.8 };
 
   const springX = useSpring(ringX, ringSpringConfig);
