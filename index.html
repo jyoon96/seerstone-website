@@ -3,47 +3,82 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SeerStone Holdings</title>
+    <title>SeerStone Holdings — Global Infrastructure</title>
+    <meta name="description" content="SeerStone Holdings. The future of integrated commerce. AI-powered global logistics and brand leadership." />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    <style>
-      html {
-        scroll-padding-top: 100px; /* Offset for fixed header */
-      }
-      body {
-        font-family: 'Inter', sans-serif;
-        background-color: #FFFFFF;
-        color: #333333;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      h1, h2, h3, h4, h5, h6 {
-        letter-spacing: -0.02em;
-      }
-      .serif {
-        font-family: 'Playfair Display', serif;
-      }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              charcoal: '#333333',
-              jet: '#000000',
-              navy: '#2C3E50',
-              'light-grey': '#F0F0F0',
+              dark: {
+                950: '#050505',
+                900: '#0A0A0A',
+                800: '#111111',
+                700: '#1A1A1A',
+                600: '#222222',
+                500: '#333333',
+                400: '#555555',
+                300: '#777777',
+              },
+              warm: {
+                50: '#FAF7F2',
+                100: '#F5F0EB',
+                200: '#EBE3D9',
+                300: '#D4BA8F',
+                400: '#C8A97E',
+                500: '#B8956A',
+                600: '#A07C52',
+              },
+              stone: {
+                muted: '#8A8578',
+              },
             },
             fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
-            }
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              serif: ['Instrument Serif', 'Georgia', 'serif'],
+            },
+            animation: {
+              'marquee': 'marquee 40s linear infinite',
+              'marquee-reverse': 'marquee-reverse 40s linear infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-slow': 'pulse 4s ease-in-out infinite',
+              'grain': 'grain 8s steps(10) infinite',
+            },
+            keyframes: {
+              marquee: {
+                '0%': { transform: 'translateX(0%)' },
+                '100%': { transform: 'translateX(-50%)' },
+              },
+              'marquee-reverse': {
+                '0%': { transform: 'translateX(-50%)' },
+                '100%': { transform: 'translateX(0%)' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              grain: {
+                '0%, 100%': { transform: 'translate(0, 0)' },
+                '10%': { transform: 'translate(-5%, -10%)' },
+                '20%': { transform: 'translate(-15%, 5%)' },
+                '30%': { transform: 'translate(7%, -25%)' },
+                '40%': { transform: 'translate(-5%, 25%)' },
+                '50%': { transform: 'translate(-15%, 10%)' },
+                '60%': { transform: 'translate(15%, 0%)' },
+                '70%': { transform: 'translate(0%, 15%)' },
+                '80%': { transform: 'translate(3%, 35%)' },
+                '90%': { transform: 'translate(-10%, 10%)' },
+              },
+            },
           }
         }
       }
     </script>
+    <link rel="stylesheet" href="/index.css">
   <script type="importmap">
 {
   "imports": {
@@ -57,7 +92,6 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
   <body>
     <div id="root"></div>

@@ -1,82 +1,134 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Logo } from './ui/Logo';
+
+const NAV_LINKS = [
+  { label: 'About', id: 'about' },
+  { label: 'Portfolio', id: 'portfolio' },
+  { label: 'Timeline', id: 'timeline' },
+  { label: 'Careers', id: 'careers' },
+  { label: 'Contact', id: 'contact' },
+];
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 80);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isMenuOpen]);
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+  const scrollTo = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      const offset = 80;
+      const pos = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: pos, behavior: 'smooth' });
     }
     setIsMenuOpen(false);
   };
 
-  const scrollToTop = (e: React.MouseEvent) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-    setIsMenuOpen(false);
-  };
-
   return (
-    <nav 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-xl border-b border-light-grey py-3' : 'bg-transparent py-8'
-      }`}
-    >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 flex justify-between items-center">
-        <a href="#" onClick={scrollToTop} className={`text-2xl font-bold tracking-tight uppercase flex items-center gap-3 group ${isScrolled ? 'text-jet' : 'text-jet'}`}>
-           <div className="h-10 w-auto">
-             <Logo className="h-full w-auto" />
-           </div>
-        </a>
-        
-        {/* Desktop Menu */}
-        <div className="hidden md:flex gap-10 text-xs font-semibold tracking-widest uppercase text-charcoal/80">
-          <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:text-navy transition-colors">About</a>
-          <a href="#logistics" onClick={(e) => scrollToSection(e, 'logistics')} className="hover:text-navy transition-colors">Logistics</a>
-          <a href="#timeline" onClick={(e) => scrollToSection(e, 'timeline')} className="hover:text-navy transition-colors">History</a>
-          <a href="#careers" onClick={(e) => scrollToSection(e, 'careers')} className="hover:text-navy transition-colors">Careers</a>
-          <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className="hover:text-navy transition-colors">Contact</a>
-        </div>
+    <>
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-700 ${
+          isScrolled
+            ? 'bg-dark-950/90 backdrop-blur-2xl border-b border-dark-600/30 py-4'
+            : 'bg-transparent py-6 md:py-8'
+        }`}
+      >
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 flex justify-between items-center">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              setIsMenuOpen(false);
+            }}
+            className="relative z-[110] flex items-center gap-3 group"
+          >
+            <div className="h-8 w-auto text-warm-100 group-hover:text-warm-400 transition-colors duration-500">
+              <Logo className="h-full w-auto" />
+            </div>
+          </a>
 
-        {/* Mobile Menu Toggle */}
-        <button className="md:hidden text-charcoal" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
+          <div className="hidden md:flex items-center gap-10">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                onClick={(e) => scrollTo(e, link.id)}
+                className="link-hover text-[11px] font-medium tracking-[0.2em] uppercase text-warm-100/60 hover:text-warm-400 transition-colors duration-300"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
 
-      {/* Mobile Menu Dropdown */}
-      {isMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-light-grey py-8 px-6 flex flex-col gap-6 text-lg shadow-xl animate-in slide-in-from-top-5">
-          <a href="#about" onClick={(e) => scrollToSection(e, 'about')}>About</a>
-          <a href="#logistics" onClick={(e) => scrollToSection(e, 'logistics')}>Logistics</a>
-          <a href="#timeline" onClick={(e) => scrollToSection(e, 'timeline')}>History</a>
-          <a href="#careers" onClick={(e) => scrollToSection(e, 'careers')}>Careers</a>
-          <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')}>Contact</a>
+          <button
+            className="md:hidden relative z-[110] w-8 h-8 flex flex-col justify-center items-center gap-1.5"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <motion.span
+              animate={isMenuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
+              className="block w-6 h-[1px] bg-warm-100 origin-center"
+            />
+            <motion.span
+              animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+              className="block w-6 h-[1px] bg-warm-100"
+            />
+            <motion.span
+              animate={isMenuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
+              className="block w-6 h-[1px] bg-warm-100 origin-center"
+            />
+          </button>
         </div>
-      )}
-    </nav>
+      </motion.nav>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 z-[99] bg-dark-950/98 backdrop-blur-3xl flex items-center justify-center"
+          >
+            <nav className="flex flex-col items-center gap-8">
+              {NAV_LINKS.map((link, i) => (
+                <motion.a
+                  key={link.id}
+                  href={`#${link.id}`}
+                  onClick={(e) => scrollTo(e, link.id)}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ delay: i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-3xl font-serif text-warm-100 hover:text-warm-400 transition-colors"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };

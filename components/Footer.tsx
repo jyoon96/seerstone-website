@@ -3,77 +3,114 @@ import { Logo } from './ui/Logo';
 
 export const Footer: React.FC = () => {
   const scrollToContact = () => {
-    const element = document.getElementById('contact');
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+    const el = document.getElementById('contact');
+    if (el) {
+      const offset = 80;
+      const pos = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: pos, behavior: 'smooth' });
     }
   };
 
   return (
-    <footer className="w-full py-20 border-t border-light-grey bg-white text-sm text-charcoal/70">
+    <footer className="relative w-full pt-20 pb-12 bg-dark-950 border-t border-dark-600/20">
+      {/* Top glow */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-warm-400/15 to-transparent" />
+
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
-          <div className="col-span-1 md:col-span-1 flex flex-col justify-between h-full">
-             <div className="text-xl font-bold text-jet tracking-tight uppercase mb-6 flex items-center gap-3">
-               <div className="h-8 w-auto text-navy">
-                 <Logo className="h-full w-auto" />
-               </div>
-             </div>
-             <p className="text-charcoal/40 text-xs leading-relaxed max-w-[200px]">
-               Building the infrastructure of tomorrow through intelligence and scale.
-             </p>
+        {/* Top Section: Large branding */}
+        <div className="mb-20">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-8 w-auto text-warm-100/80">
+              <Logo className="h-full w-auto" />
+            </div>
           </div>
+          <p className="text-sm text-warm-100/20 max-w-sm font-light leading-relaxed">
+            Building the infrastructure of tomorrow through intelligence and scale. Global operations, local precision.
+          </p>
+        </div>
 
-          <div className="col-span-1">
-            <h4 className="font-bold text-jet mb-6 uppercase tracking-widest text-[10px]">Americas</h4>
-            <ul className="space-y-3 font-light">
-              <li className="hover:text-navy cursor-default transition-colors">Los Angeles, USA</li>
-              <li className="hover:text-navy cursor-default transition-colors">Boston, USA</li>
-              <li className="hover:text-navy cursor-default transition-colors">Vancouver, CAN</li>
+        {/* Columns */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20">
+          <div>
+            <h4 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-warm-400/50 mb-6">
+              Americas
+            </h4>
+            <ul className="space-y-3">
+              {['Los Angeles, USA', 'Boston, USA', 'Vancouver, CAN'].map((loc) => (
+                <li key={loc} className="text-sm text-warm-100/25 font-light hover:text-warm-100/50 transition-colors duration-300 cursor-default">
+                  {loc}
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div className="col-span-1">
-            <h4 className="font-bold text-jet mb-6 uppercase tracking-widest text-[10px]">Global Hubs</h4>
-            <ul className="space-y-3 font-light">
-              <li className="hover:text-navy cursor-default transition-colors">Guangzhou, CN</li>
-              <li className="hover:text-navy cursor-default transition-colors">Dong Guan, CN</li>
-              <li className="hover:text-navy cursor-default transition-colors">Seoul, KR</li>
-              <li className="hover:text-navy cursor-default transition-colors">Dubai, UAE</li>
+          <div>
+            <h4 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-warm-400/50 mb-6">
+              Global Hubs
+            </h4>
+            <ul className="space-y-3">
+              {['Guangzhou, CN', 'Dong Guan, CN', 'Seoul, KR', 'Dubai, UAE'].map((loc) => (
+                <li key={loc} className="text-sm text-warm-100/25 font-light hover:text-warm-100/50 transition-colors duration-300 cursor-default">
+                  {loc}
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div className="col-span-1">
-             <h4 className="font-bold text-jet mb-6 uppercase tracking-widest text-[10px]">Inquiries</h4>
-             <button 
-               onClick={scrollToContact}
-               className="text-navy font-medium hover:underline decoration-1 underline-offset-4 transition-all mb-6"
-             >
-               General Inquiry Form &rarr;
-             </button>
-             <p className="text-charcoal/40 text-xs font-mono">
-               contact@seerstone.vip<br/>
-               investors@seerstone.vip
-             </p>
+          <div>
+            <h4 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-warm-400/50 mb-6">
+              Company
+            </h4>
+            <ul className="space-y-3">
+              {[
+                { label: 'About', id: 'about' },
+                { label: 'Portfolio', id: 'portfolio' },
+                { label: 'Careers', id: 'careers' },
+                { label: 'Contact', id: 'contact' },
+              ].map((link) => (
+                <li key={link.id}>
+                  <a
+                    href={`#${link.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById(link.id)?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="text-sm text-warm-100/25 font-light hover:text-warm-400 transition-colors duration-300 link-hover"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-warm-400/50 mb-6">
+              Inquiries
+            </h4>
+            <button
+              onClick={scrollToContact}
+              className="text-sm text-warm-400/70 font-light hover:text-warm-400 transition-colors duration-300 link-hover mb-6 text-left"
+            >
+              General Inquiry Form &rarr;
+            </button>
+            <p className="text-[11px] text-warm-100/20 font-mono leading-relaxed">
+              contact@seerstone.vip<br />
+              investors@seerstone.vip
+            </p>
           </div>
         </div>
-        
-        <div className="border-t border-light-grey pt-10 flex flex-col md:flex-row justify-between items-center text-[10px] text-charcoal/30 uppercase tracking-widest font-medium">
-           <div className="flex gap-8">
-             <span>© 2026 SeerStone Holdings</span>
-             <span>All Rights Reserved</span>
-           </div>
-           <div className="flex gap-8 mt-4 md:mt-0">
-             <span className="cursor-pointer hover:text-charcoal transition-colors">Privacy Policy</span>
-             <span className="cursor-pointer hover:text-charcoal transition-colors">Terms of Service</span>
-           </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-dark-600/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex gap-8 text-[10px] text-warm-100/15 uppercase tracking-[0.2em] font-medium">
+            <span>&copy; 2026 SeerStone Holdings</span>
+            <span>All Rights Reserved</span>
+          </div>
+          <div className="flex gap-8 text-[10px] text-warm-100/15 uppercase tracking-[0.2em] font-medium">
+            <span className="hover:text-warm-100/40 transition-colors duration-300 cursor-pointer">Privacy Policy</span>
+            <span className="hover:text-warm-100/40 transition-colors duration-300 cursor-pointer">Terms of Service</span>
+          </div>
         </div>
       </div>
     </footer>
