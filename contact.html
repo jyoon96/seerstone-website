@@ -49,22 +49,22 @@
             </div>
           </div>
           <div class="card card-lg fade-in" style="border-radius: 32px;">
-            <form class="form-grid">
+            <form id="contact-form" class="form-grid" method="post" action="/api/contact" novalidate>
               <div class="field">
-                <label>Name</label>
-                <input type="text" placeholder="Your name" required />
+                <label for="cf-name">Name</label>
+                <input id="cf-name" name="name" type="text" placeholder="Your name" required autocomplete="name" />
               </div>
               <div class="field">
-                <label>Email</label>
-                <input type="email" placeholder="you@company.com" required />
+                <label for="cf-email">Email</label>
+                <input id="cf-email" name="email" type="email" placeholder="you@company.com" required autocomplete="email" />
               </div>
               <div class="field">
-                <label>Company</label>
-                <input type="text" placeholder="Optional" />
+                <label for="cf-company">Company</label>
+                <input id="cf-company" name="company" type="text" placeholder="Optional" autocomplete="organization" />
               </div>
               <div class="field">
-                <label>Inquiry type</label>
-                <select>
+                <label for="cf-inquiry">Inquiry type</label>
+                <select id="cf-inquiry" name="inquiry_type">
                   <option>Partnership</option>
                   <option>Korean brand inquiry</option>
                   <option>Careers</option>
@@ -75,11 +75,14 @@
                 </select>
               </div>
               <div class="field">
-                <label>What can we help with?</label>
-                <textarea placeholder="A few sentences are fine. Links welcome."></textarea>
+                <label for="cf-message">What can we help with?</label>
+                <textarea id="cf-message" name="message" placeholder="A few sentences are fine. Links welcome." required minlength="2" maxlength="5000"></textarea>
               </div>
-              <button type="button" class="form-submit" style="justify-self: flex-start">Send →</button>
-              <!-- TODO: confirm production email service and inbox address -->
+              <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"
+                     style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
+              <button id="cf-submit" type="submit" class="form-submit" style="justify-self: flex-start">Send →</button>
+              <div id="cf-status" role="status" aria-live="polite"
+                   style="font-size: 14px; min-height: 20px; color: var(--muted, #64748B);"></div>
             </form>
           </div>
         </div>
@@ -113,10 +116,14 @@
           </div>
           <div class="card-sm card fade-in" data-delay="240" style="border-radius: 24px;">
             <div class="region-map" style="height: 120px; justify-content: flex-start;">
-              <img src="assets/images/map-us.png" alt="US office" />
+              <img src="assets/images/map-us.png" alt="Lawrence, Massachusetts" />
             </div>
-            <div class="region-name">US office</div>
-            <div class="region-meta mt-2">Growth &amp; commercial — <!-- TODO: confirm US city before launch --><span class="muted">city TBC</span></div>
+            <div class="region-name">Lawrence</div>
+            <div class="region-meta mt-2">Growth &amp; commercial — USA</div>
+            <address class="muted mt-2" style="font-size: 13px; font-style: normal; line-height: 1.5;">
+              46 Stafford St. Ste 2911<br/>
+              Lawrence, MA 01841
+            </address>
           </div>
         </div>
       </div>
@@ -126,5 +133,54 @@
   <div id="footer-host"></div>
   <script src="assets/components.js"></script>
   <script>SS.init({ active: 'contact' });</script>
+  <script>
+    (function () {
+      var form = document.getElementById('contact-form');
+      if (!form) return;
+      var btn = document.getElementById('cf-submit');
+      var status = document.getElementById('cf-status');
+      var ORIG_BTN = btn.textContent;
+
+      function setStatus(msg, kind) {
+        status.textContent = msg || '';
+        status.style.color = kind === 'error' ? '#B91C1C'
+                          : kind === 'ok'    ? '#0F766E'
+                          : 'var(--muted, #64748B)';
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (btn.disabled) return;
+
+        var data = Object.fromEntries(new FormData(form).entries());
+        // honeypot — silently succeed
+        if (data.website) { setStatus("Thanks — we'll be in touch.", 'ok'); form.reset(); return; }
+
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        setStatus('');
+
+        try {
+          var res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          var payload = await res.json().catch(function () { return {}; });
+          if (res.ok && payload.ok) {
+            setStatus("Thanks — we'll respond within two business days.", 'ok');
+            form.reset();
+          } else {
+            setStatus(payload.error || 'Something went wrong. Please email jin@seerstone.vip directly.', 'error');
+          }
+        } catch (err) {
+          setStatus('Network error. Please email jin@seerstone.vip directly.', 'error');
+        } finally {
+          btn.disabled = false;
+          btn.textContent = ORIG_BTN;
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
