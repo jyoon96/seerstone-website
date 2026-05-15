@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — SeerStone</title>
+  <meta name="description" content="One group, many functions. SeerStone is an operating group that owns and runs consumer brands end-to-end." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/globals.css" />
+</head>
+<body>
+  <main id="main" data-screen-label="About">
+
+    <!-- COMPACT PHOTO HERO -->
+    <section class="hero-compact" data-screen-label="Hero">
+      <div class="hero-fb-media">
+        <img src="assets/images/about-hero.jpeg" alt="SeerStone office corridor at dusk" />
+      </div>
+      <div class="hero-fb-scrim" aria-hidden="true"
+           style="background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 30%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.75) 100%);"></div>
+      <div class="hero-fb-overlay hero-centered">
+        <div class="hero-fb-text">
+          <div class="eyebrow fade-in mb-6" style="color: rgba(255,255,255,0.7);">About</div>
+          <h1 class="h1" data-ah="One group.&#10;Many functions."></h1>
+          <p class="body-lg fade-in mt-6" data-delay="900" style="color: rgba(255,255,255,0.85); max-width: 640px; margin-left: auto; margin-right: auto;">
+            SeerStone is a connected operating group. We own consumer brands, build the systems that run them,
+            and treat the entire stack as one product.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- prose — first 3 paragraphs are centered intro -->
+    <section class="section">
+      <div class="wrap">
+        <div class="col body-lg fade-in about-intro" style="display:flex; flex-direction: column; gap: 24px; margin-left: auto; margin-right: auto; text-align: center;">
+          <p>
+            We started as operators, not consultants. The group was founded by people who had built and shipped
+            consumer products before — and were tired of seeing good brands stall because their growth, supply,
+            and ops lived in seven different relationships.
+          </p>
+          <p>
+            So we built one. A single team running creative through to delivery, with AI used wherever it
+            could move work faster, more cheaply, or more accurately than the previous way. Not as a marketing
+            line; as how the work actually happens.
+          </p>
+          <p>
+            We own the brands we run. We hire operators who like the whole engine. We invest in systems that
+            would be hard to rent. And we move with the quiet pace of a group that doesn't need to prove
+            anything to investors — just to the people buying the products.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT WE BELIEVE — Caveat #1 -->
+    <section class="section" data-screen-label="Beliefs">
+      <div class="wrap">
+        <div class="fade-in mb-12">
+          <!-- CAVEAT MOMENT #1 -->
+          <div class="script" style="color: var(--text-muted); margin-bottom: 16px;">what we believe</div>
+          <h2 class="h2" style="max-width: 720px">Three ideas the group is built on.</h2>
+        </div>
+        <div class="grid-3">
+          <div class="card fade-in" style="min-height: 280px; display:flex; flex-direction:column; justify-content: space-between;">
+            <div class="eyebrow">01</div>
+            <div>
+              <div class="h3 mt-8" style="margin-bottom: 10px">Own the full stack.</div>
+              <p class="muted">If we don't control it, we can't really improve it. Brand, supply, marketing, fulfillment — under one roof, accountable to one P&amp;L.</p>
+            </div>
+          </div>
+          <div class="card fade-in" data-delay="120" style="min-height: 280px; display:flex; flex-direction:column; justify-content: space-between;">
+            <div class="eyebrow">02</div>
+            <div>
+              <div class="h3 mt-8" style="margin-bottom: 10px">AI as infrastructure.</div>
+              <p class="muted">AI sits underneath the workflow, not on top of it as a feature. About 80% of our day-to-day work touches a system we built.</p>
+            </div>
+          </div>
+          <div class="card fade-in" data-delay="240" style="min-height: 280px; display:flex; flex-direction:column; justify-content: space-between;">
+            <div class="eyebrow">03</div>
+            <div>
+              <div class="h3 mt-8" style="margin-bottom: 10px">Scale through discipline.</div>
+              <p class="muted">Growth is the by-product of a tight operating cadence, not the goal. We compound the operation; the numbers follow.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section-tight">
+      <div class="wrap">
+        <div class="cta fade-in">
+          <div class="eyebrow">Work with us</div>
+          <h2 class="h2 mt-6" style="max-width: 640px; margin-left:auto; margin-right:auto">Two ways in: partner or build.</h2>
+          <div class="cta-buttons">
+            <a href="contact.html" class="btn btn-primary">Partner with us →</a>
+            <a href="careers.html" class="btn btn-glass">Join the team</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <div id="footer-host"></div>
+  <script src="assets/components.js"></script>
+  <script>SS.init({ active: 'about' });</script>
+</body>
+</html>

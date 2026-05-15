@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — SeerStone</title>
+  <meta name="description" content="We respond within two business days. Partnership, Korean brand, careers, press, and operations inquiries." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/globals.css" />
+</head>
+<body>
+  <main id="main" data-screen-label="Contact">
+
+    <!-- TEXT-ONLY HERO (no photo) — centered, sits on the warm canvas -->
+    <section data-screen-label="Hero" style="padding: 180px 24px 80px; text-align: center;">
+      <div class="wrap" style="display: flex; flex-direction: column; align-items: center; gap: 24px;">
+        <div class="eyebrow fade-in">Contact</div>
+        <h1 class="h1" data-ah="Tell us what&#10;you're building." style="text-wrap: balance;"></h1>
+        <p class="body-lg muted fade-in" data-delay="900" style="max-width: 680px; margin: 0 auto;">
+          Partnership, Korean brand, careers, press, operations. One inbox.
+          We read every message and respond within two business days.
+        </p>
+        <!-- thin hairline divider, lets the eye settle before the form -->
+        <div class="fade-in" data-delay="1200" aria-hidden="true"
+             style="width: 64px; height: 1px; background: rgba(15,23,42,0.2); margin-top: 16px;"></div>
+      </div>
+    </section>
+
+    <!-- Twin-card layout -->
+    <section class="section-tight" data-screen-label="Form">
+      <div class="wrap">
+        <div class="twin" style="grid-template-columns: 1fr;">
+          <div style="border-radius: 32px; min-height: 480px; position: relative; overflow: hidden; padding: 40px; color: #fff; background: #0A152D;">
+            <!-- TODO: replace with quiet operations MP4 -->
+            <div class="video-placeholder warm" aria-hidden="true" style="position: absolute; inset: 0; opacity: 0.55;"></div>
+            <div class="footer-left-tint" style="background: linear-gradient(180deg, rgba(10,21,45,0.55), rgba(10,21,45,0.92));"></div>
+            <div style="position: relative; z-index: 2; display: flex; flex-direction: column; gap: 24px; height: 100%; min-height: 400px;">
+              <div style="font-family: var(--font-display); font-weight: 600; font-size: 22px; letter-spacing: -0.02em;">SeerStone</div>
+              <div style="margin-top: auto;">
+                <div class="eyebrow" style="color: rgba(255,255,255,0.6)">Response time</div>
+                <div class="h2 mt-4" style="color:#fff; font-size: 36px; max-width: 360px;">We respond within two business days.</div>
+                <p class="mt-6" style="color: rgba(255,255,255,0.7); max-width: 360px;">
+                  All inquiries route through one inbox. We triage by topic and reply directly —
+                  no auto-responder, no chatbot.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="card card-lg fade-in" style="border-radius: 32px;">
+            <form class="form-grid">
+              <div class="field">
+                <label>Name</label>
+                <input type="text" placeholder="Your name" required />
+              </div>
+              <div class="field">
+                <label>Email</label>
+                <input type="email" placeholder="you@company.com" required />
+              </div>
+              <div class="field">
+                <label>Company</label>
+                <input type="text" placeholder="Optional" />
+              </div>
+              <div class="field">
+                <label>Inquiry type</label>
+                <select>
+                  <option>Partnership</option>
+                  <option>Korean brand inquiry</option>
+                  <option>Careers</option>
+                  <option>Marketing or AI support</option>
+                  <option>Fulfillment or operations</option>
+                  <option>Press</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>What can we help with?</label>
+                <textarea placeholder="A few sentences are fine. Links welcome."></textarea>
+              </div>
+              <button type="button" class="form-submit" style="justify-self: flex-start">Send →</button>
+              <!-- TODO: confirm production email service and inbox address -->
+            </form>
+          </div>
+        </div>
+      </div>
+      <style>
+        @media (min-width: 900px) { .twin { grid-template-columns: 1fr 1.2fr; } }
+      </style>
+    </section>
+
+    <!-- Caveat moment? Already exhausted — use a plain eyebrow here -->
+    <section class="section-tight" data-screen-label="Offices">
+      <div class="wrap">
+        <div class="fade-in mb-12">
+          <div class="eyebrow mb-6">Where we work from</div>
+          <h2 class="h2">Three offices, one team.</h2>
+        </div>
+        <div class="grid-3">
+          <div class="card-sm card fade-in" style="border-radius: 24px;">
+            <div class="region-map" style="height: 120px; justify-content: flex-start;">
+              <img src="assets/images/map-china.png" alt="Dongguan, China" />
+            </div>
+            <div class="region-name">Dongguan</div>
+            <div class="region-meta mt-2">Logistics hub &amp; sourcing — China</div>
+          </div>
+          <div class="card-sm card fade-in" data-delay="120" style="border-radius: 24px;">
+            <div class="region-map" style="height: 120px; justify-content: flex-start;">
+              <img src="assets/images/map-korea.png" alt="Seoul, Korea" />
+            </div>
+            <div class="region-name">Seoul</div>
+            <div class="region-meta mt-2">Brand &amp; partnership team — Korea</div>
+          </div>
+          <div class="card-sm card fade-in" data-delay="240" style="border-radius: 24px;">
+            <div class="region-map" style="height: 120px; justify-content: flex-start;">
+              <img src="assets/images/map-us.png" alt="US office" />
+            </div>
+            <div class="region-name">US office</div>
+            <div class="region-meta mt-2">Growth &amp; commercial — <!-- TODO: confirm US city before launch --><span class="muted">city TBC</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <div id="footer-host"></div>
+  <script src="assets/components.js"></script>
+  <script>SS.init({ active: 'contact' });</script>
+</body>
+</html>

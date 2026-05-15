@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SeerStone — Mobile preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      background: #efece5;
+      font-family: Inter, system-ui, sans-serif;
+      color: #0A152D;
+    }
+    .page-header {
+      position: fixed;
+      top: 16px; left: 16px;
+      z-index: 100;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px) saturate(180%);
+      border-radius: 14px;
+      padding: 10px 16px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+      font-size: 13px;
+      display: flex; gap: 14px; align-items: center;
+    }
+    .page-header b { font-family: Outfit; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }
+    .page-header .muted { color: #64748B; }
+    .page-header a {
+      color: #0A152D;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: rgba(15,23,42,0.05);
+      transition: background 150ms;
+    }
+    .page-header a:hover { background: rgba(15,23,42,0.1); }
+    /* iframe inside an iOS device frame */
+    .device-iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #F7F5F0;
+    }
+  </style>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="page-header">
+    <b>SeerStone</b>
+    <span class="muted">mobile preview · pan, scroll inside each phone</span>
+    <a href="index.html">← Desktop site</a>
+  </div>
+
+  <div id="root"></div>
+
+  <script type="text/babel" src="ios-frame.jsx"></script>
+  <script type="text/babel" src="design-canvas.jsx"></script>
+  <script type="text/babel">
+    const PAGES = [
+      { id: 'home',      label: 'Homepage',     src: 'index.html' },
+      { id: 'about',     label: 'About',        src: 'about.html' },
+      { id: 'platform',  label: 'Platform',     src: 'platform.html' },
+      { id: 'aimkt',     label: 'AI Marketing', src: 'ai-marketing.html' },
+      { id: 'fulfill',   label: 'Fulfillment',  src: 'fulfillment.html' },
+      { id: 'korea',     label: 'Korea',        src: 'korea.html' },
+      { id: 'careers',   label: 'Careers',      src: 'careers.html' },
+      { id: 'contact',   label: 'Contact',      src: 'contact.html' },
+    ];
+
+    function PageFrame({ src }) {
+      const ref = React.useRef(null);
+      const pinToTop = () => {
+        const f = ref.current;
+        if (!f) return;
+        try {
+          // Many things can scroll a freshly-loaded iframe (font-load reflow,
+          // intersection observer firing, focus-on-mount). Pin scroll to 0
+          // a few times to outlast those.
+          const tick = () => { try { f.contentWindow.scrollTo(0, 0); } catch (e) {} };
+          tick();
+          [50, 200, 600, 1200, 2000].forEach(t => setTimeout(tick, t));
+        } catch (e) {}
+      };
+      return (
+        <IOSDevice width={402} height={874}>
+          <iframe ref={ref} className="device-iframe" src={src} onLoad={pinToTop} />
+        </IOSDevice>
+      );
+    }
+
+    function App() {
+      return (
+        <DesignCanvas>
+          <DCSection id="mobile-pages" title="Mobile · iPhone preview" subtitle="Every page at native mobile width. Scroll inside any phone; pan and zoom the canvas.">
+            {PAGES.map(p => (
+              <DCArtboard
+                key={p.id}
+                id={p.id}
+                label={p.label}
+                width={402}
+                height={874}
+                style={{ background: 'transparent', boxShadow: 'none', border: 'none', padding: 0, overflow: 'visible' }}
+              >
+                <PageFrame src={p.src} />
+              </DCArtboard>
+            ))}
+          </DCSection>
+        </DesignCanvas>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
